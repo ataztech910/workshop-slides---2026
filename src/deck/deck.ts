@@ -705,7 +705,7 @@ npm run mission 7   ← what to do, and what is done`,
       x: col(1),
       y: ROW.p4,
       detail: {
-        heading: "Three terminals",
+        heading: "Mission 9 · two deployments, customers on both — npm run mission 9",
         code: {
           lang: "bash",
           text: `npm run observer          # 1
@@ -713,7 +713,7 @@ npm run dev:v1            # 2 — later Ctrl+C and: npm run dev:v2
 npm run users 60          # 3 — customers in a browser
 npm run load 40           # 3 — and server traffic`,
         },
-        note: "3 min. users causes the browser bugs (Chrome, nothing downloaded), load sends server traffic. After v2, both again.",
+        note: "3 min. users causes the browser bugs (Chrome, nothing downloaded), load sends server traffic. After v2, both again. npm run mission 9 checks v1 then v2 in the observer, browser customers on both, and that the observer can compare the two (checkouts in both).",
       },
     },
     {
@@ -1375,7 +1375,7 @@ trace.getActiveSpan()?.addEvent('integrity_check', {
     ]),
     ...inPart(PART.p4, [
       { id: "part-4", focus: ["part-4"], caption: "Part 4 · What arrives" },
-      { id: "deploys", focus: ["deploys"], caption: "Your turn · customers and two deployments" },
+      { id: "deploys", focus: ["deploys"], caption: "Your turn · mission 9: customers and two deployments" },
       { id: "find-bugs", focus: ["find-bugs"], caption: "Your turn · find the six bugs" },
       {
         id: "errors",
