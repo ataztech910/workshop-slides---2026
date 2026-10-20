@@ -459,30 +459,26 @@ stuck? npm run receiver -- --solution`,
       id: "apm-by-hand",
       ...yourTurn(10),
       title: "The APM agent, by hand",
-      subtitle: "npm install next-observe — and three files",
+      subtitle: "npm install next-observe — then uncomment three files",
       status: "running",
       size: "lg",
       x: col(6),
       y: ROW.p2,
       detail: {
-        heading: "It sends to 127.0.0.1:4318 by default — into your receiver",
+        heading: "Mission 3: let the shop report itself — into your receiver",
         code: {
-          lang: "ts",
-          text: `// instrumentation.ts
-export { register } from 'next-observe/server'
+          lang: "text",
+          text: `npm install next-observe
 
-// instrumentation-client.ts
-import 'next-observe/client'
+uncomment the ▶ lines:
+  instrumentation.ts          the server half
+  instrumentation-client.ts   the browser half
+  next.config.ts              the browser's route to 4318
 
-// next.config.ts
-import { withObserve } from 'next-observe/config'
-import type { NextConfig } from 'next'
-
-const nextConfig: NextConfig = {}
-export default withObserve(nextConfig)`,
+npm run mission               ← your checklist`,
         },
-        bullets: ["click through the shop again — watch the receiver", "the browser bugs from part 1 are now JSON in your terminal"],
-        note: "10 min. Exactly these files are what npx next-observer init generates — say so in part 3.",
+        bullets: ["restart npm run dev, click through the shop", "the bugs from part 1 arrive as JSON — npm run mission ticks them off"],
+        note: "10 min. npm run mission (tools/missions.mjs) checks the install, the three files, server and browser spans in .telemetry/spans.ndjson, the 400 from Buy ×20, the uncaught error from Save for later, and the noise filter in print-spans. On ★: the 400 says THAT, not WHY — the next slide. Exactly these lines are what npx next-observer init writes — say so in part 3.",
       },
     },
     {
