@@ -429,7 +429,7 @@ stuck? npm run receiver -- --solution`,
       x: col(4),
       y: ROW.p2,
       detail: {
-        heading: "Copy the span in span.json and make it a child",
+        heading: "Mission: show where the order failed — inside the payment",
         code: {
           lang: "json",
           text: `{ "traceId": "5b8efff798038103d269b633813fc60c",   ← the same
@@ -438,11 +438,11 @@ stuck? npm run receiver -- --solution`,
   "name": "chargePayment", … }`,
         },
         bullets: [
-          "the same traceId from another service — that is what traceparent carries",
-          "time is nanoseconds as strings; spans come in batches, a second or two late",
-          "receiver down? the exporter drops spans — the app does not break",
+          "add a second span to \"spans\" in tools/span.json (mind the comma)",
+          "uncomment the indent ▶ line in print-spans.mjs — a tree looks like a tree",
+          "the receiver's checklist turns green field by field",
         ],
-        note: "5 min. Every point on their own JSON.",
+        note: "5 min. Mission 2 in tools/mission.mjs: chargePayment, same traceId, own spanId, parentSpanId = the checkout's spanId, status 2, times inside the parent — the hints print the real ids. On ★ talk through: traceId = same request, parentSpanId = inside which span; between services the traceId travels in the traceparent header; time is nanoseconds as strings; spans come in batches; if the receiver is down the sender drops spans and the app does not break.",
       },
     },
     {
@@ -1360,7 +1360,7 @@ trace.getActiveSpan()?.addEvent('integrity_check', {
       { id: "black-box", focus: ["black-box"], caption: "Only one format matters: OTLP" },
       { id: "receiver", focus: ["receiver"], caption: "Your turn · your own receiver" },
       { id: "first-json", focus: ["first-json"], caption: "Your turn · mission: report the failed order by hand" },
-      { id: "tree", focus: ["tree"], caption: "Your turn · make it a tree" },
+      { id: "tree", focus: ["tree"], caption: "Your turn · mission: make it a tree" },
       { id: "break-1", focus: ["break-1"], caption: "Break · 15 minutes" },
       { id: "apm-by-hand", focus: ["apm-by-hand"], caption: "Your turn · the APM agent, by hand" },
       { id: "sensors", focus: ["sensors"], caption: "It's a trap! — the 400 says nothing" },
