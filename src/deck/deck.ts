@@ -649,13 +649,13 @@ npm run mission 7   ← what to do, and what is done`,
       x: col(3),
       y: ROW.p3,
       detail: {
-        heading: "The app does not change: not one line",
+        heading: "Mission 8 · same port, same OTLP — the app does not change a line",
         bullets: [
-          "Ctrl+C the receiver, then npm run observer",
+          "Ctrl+C the receiver, then npm run observer · npm run mission 8",
           "open http://127.0.0.1:4318 — find your placeOrder",
           "“Where were you?” — “Nobody connected me, Kevin.”",
         ],
-        note: "5 min. The moment of the day: the same OTLP, a different receiver.",
+        note: "5 min. The moment of the day: the same OTLP, a different receiver. npm run mission 8 asks the observer on 4318: is it the observer (not the receiver), the shop and the browser arrive, a placeOrder trace, the reason on it — what the receiver kept is not in the observer, so they buy 20 once more.",
       },
     },
     {
@@ -1370,7 +1370,7 @@ trace.getActiveSpan()?.addEvent('integrity_check', {
       { id: "part-3", focus: ["part-3"], caption: "Part 3 · The observer" },
       { id: "three-am", focus: ["three-am"], caption: "There has to be a better way" },
       { id: "words", focus: ["apm-agent", "observer"], caption: "Two packages, one letter apart" },
-      { id: "wakes-up", focus: ["wakes-up"], caption: "Your turn · good evening, Kevin" },
+      { id: "wakes-up", focus: ["wakes-up"], caption: "Your turn · mission 8: good evening, Kevin" },
       { id: "tour", focus: ["tour"], caption: "A tour on your own spans" },
     ]),
     ...inPart(PART.p4, [
