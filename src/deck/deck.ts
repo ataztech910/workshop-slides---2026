@@ -512,26 +512,24 @@ npm run mission               ← your checklist`,
       x: col(8),
       y: ROW.p2,
       detail: {
-        heading: "app/api/checkout/route.ts",
+        heading: "Mission 4: make the 400 say why — app/api/checkout/route.ts",
         code: {
           lang: "ts",
-          text: `import { trace } from '@opentelemetry/api'
-const tracer = trace.getTracer('porto-shop')
+          text: `// uncomment the ▶ lines:
+import { trace } from '@opentelemetry/api'
 
-return tracer.startActiveSpan('placeOrder', async (span) => {
-  try {
-    span.setAttribute('order.quantity', String(quantity))
-    if (quantity > 10) {
-      span.setAttribute('order.rejected', \`quantity \${quantity} > limit 10\`)
-      return Response.json({ error: '…' }, { status: 400 })
-    }
-    …
-  } finally {
-    span.end() // also on the early return — an unended span is never sent
-  }
-})`,
+span = trace.getTracer('porto-shop').startSpan('placeOrder')
+span.setAttribute('order.quantity', Number(quantity))
+if (quantity > 10) {
+  span.setAttribute('order.rejected', \`quantity \${quantity}, allowed 1–10\`)
+  return Response.json({ error: '…' }, { status: 400 })
+}
+…
+finally { span.end() } // ready: an unended span is never sent
+
+npm run mission   ← your checklist`,
         },
-        note: "8 min. Result: the reason for the rejection as an attribute on the span. @opentelemetry/api comes with next-observe — no extra install.",
+        note: "8 min. The route ships with these lines commented out and a do-nothing stand-in for the span, so the shop works before. npm run mission: the four lines, placeOrder arrives, the reason arrives (Buy ×20). On ★: no automatic instrumentation knows what an order is — your code does. @opentelemetry/api comes with next-observe — no extra install. npm run case checkout-400 finds the reason later.",
       },
     },
     {
