@@ -339,7 +339,7 @@ context:   traceparent: 00-<traceId>-<spanId>-01`,
       x: col(0),
       y: ROW.p2 - 40,
       detail: {
-        heading: "Seven small tasks",
+        heading: "Seven missions — each one: npm run mission N",
         bullets: [
           "your own OTLP receiver · your first span · make it a tree",
           "the shop sends its own spans · a span of your own · 'use observe'",
@@ -378,11 +378,11 @@ context:   traceparent: 00-<traceId>-<spanId>-01`,
       x: col(2),
       y: ROW.p2,
       detail: {
-        heading: "npm run receiver — and uncomment the ▶ lines in two files",
+        heading: "Mission 1 · your own receiver — npm run mission 1",
         code: {
           lang: "text",
-          text: `1. tools/receiver.mjs     ▶ receive, keep, answer {}
-2. tools/print-spans.mjs  ▶ one line per span  (Cmd+/)
+          text: `npm run mission 1   ← what to do, and what is done
+
 
 a batch:
 resourceSpans[]
@@ -409,11 +409,11 @@ stuck? npm run receiver -- --solution`,
       x: col(3),
       y: ROW.p2,
       detail: {
-        heading: "Mission: report Sandy-9's failed order by hand",
+        heading: "Mission 2 · report Sandy-9's failed order by hand",
         bullets: [
           "you are the app now",
-          "edit tools/span.json, send it with curl (README, part 2)",
-          "your receiver shows a checklist — get all five green",
+          "npm run mission 2 — what to do, and what is done",
+          "your receiver shows the checklist after every send",
         ],
         note: "5 min. curl -X POST localhost:4318/v1/traces -H 'content-type: application/json' -d @tools/span.json. The receiver prints the mission checklist after every hand-sent span (tools/mission.mjs, scope by-hand): name POST /checkout, a full second, status code 2, order.quantity=20, order.rejected with the reason. Each item points at the JSON field. On ★ say it out loud: soon the shop will fill these fields by itself, thousands of times a second. The reason as an attribute comes back twice: Make it a tree, and A span of your own from the shop's code.",
       },
@@ -429,7 +429,7 @@ stuck? npm run receiver -- --solution`,
       x: col(4),
       y: ROW.p2,
       detail: {
-        heading: "Mission: show where the order failed — inside the payment",
+        heading: "Mission 3 · show where the order failed — inside the payment",
         code: {
           lang: "json",
           text: `{ "traceId": "5b8efff798038103d269b633813fc60c",   ← the same
@@ -438,11 +438,11 @@ stuck? npm run receiver -- --solution`,
   "name": "chargePayment", … }`,
         },
         bullets: [
-          "add a second span to \"spans\" in tools/span.json (mind the comma)",
-          "uncomment the indent ▶ line in print-spans.mjs — a tree looks like a tree",
+          "npm run mission 3 — what to do, and what is done",
+          "a second span in tools/span.json, the indent ▶ line in print-spans.mjs",
           "the receiver's checklist turns green field by field",
         ],
-        note: "5 min. Mission 2 in tools/mission.mjs: chargePayment, same traceId, own spanId, parentSpanId = the checkout's spanId, status 2, times inside the parent — the hints print the real ids. On ★ talk through: traceId = same request, parentSpanId = inside which span; between services the traceId travels in the traceparent header; time is nanoseconds as strings; spans come in batches; if the receiver is down the sender drops spans and the app does not break.",
+        note: "5 min. Mission 3 in tools/mission.mjs: chargePayment, same traceId, own spanId, parentSpanId = the checkout's spanId, status 2, times inside the parent — the hints print the real ids. On ★ talk through: traceId = same request, parentSpanId = inside which span; between services the traceId travels in the traceparent header; time is nanoseconds as strings; spans come in batches; if the receiver is down the sender drops spans and the app does not break.",
       },
     },
     {
@@ -465,7 +465,7 @@ stuck? npm run receiver -- --solution`,
       x: col(6),
       y: ROW.p2,
       detail: {
-        heading: "Mission 3: let the shop report itself — into your receiver",
+        heading: "Mission 4 · let the shop report itself — into your receiver",
         code: {
           lang: "text",
           text: `npm install next-observe
@@ -475,10 +475,10 @@ uncomment the ▶ lines:
   instrumentation-client.ts   the browser half
   next.config.ts              the browser's route to 4318
 
-npm run mission               ← your checklist`,
+npm run mission 4             ← what to do, and what is done`,
         },
-        bullets: ["restart npm run dev, click through the shop", "the bugs from part 1 arrive as JSON — npm run mission ticks them off"],
-        note: "10 min. npm run mission (tools/missions.mjs) checks the install, the three files, server and browser spans in .telemetry/spans.ndjson, the 400 from Buy ×20, the uncaught error from Save for later, and the noise filter in print-spans. On ★: the 400 says THAT, not WHY — the next slide. Exactly these lines are what npx next-observer init writes — say so in part 3.",
+        bullets: ["restart npm run dev, click through the shop", "the bugs from part 1 arrive as JSON — npm run mission 4 ticks them off"],
+        note: "10 min. npm run mission 4 (tools/missions.mjs) checks the install, the three files, server and browser spans in .telemetry/spans.ndjson, the 400 from Buy ×20, the uncaught error from Save for later, and the noise filter in print-spans. On ★: the 400 says THAT, not WHY — the next slide. Exactly these lines are what npx next-observer init writes — say so in part 3.",
       },
     },
     {
@@ -512,7 +512,7 @@ npm run mission               ← your checklist`,
       x: col(8),
       y: ROW.p2,
       detail: {
-        heading: "Mission 4: make the 400 say why — app/api/checkout/route.ts",
+        heading: "Mission 5 · make the 400 say why — app/api/checkout/route.ts",
         code: {
           lang: "ts",
           text: `// uncomment the ▶ lines:
@@ -527,9 +527,9 @@ if (quantity > 10) {
 …
 finally { span.end() } // ready: an unended span is never sent
 
-npm run mission   ← your checklist`,
+npm run mission 5   ← what to do, and what is done`,
         },
-        note: "8 min. The route ships with these lines commented out and a do-nothing stand-in for the span, so the shop works before. npm run mission: the four lines, placeOrder arrives, the reason arrives (Buy ×20). On ★: no automatic instrumentation knows what an order is — your code does. @opentelemetry/api comes with next-observe — no extra install. npm run case checkout-400 finds the reason later.",
+        note: "8 min. The route ships with these lines commented out and a do-nothing stand-in for the span, so the shop works before. npm run mission 5: the four lines, placeOrder arrives, the reason arrives (Buy ×20). On ★: no automatic instrumentation knows what an order is — your code does. @opentelemetry/api comes with next-observe — no extra install. npm run case checkout-400 finds the reason later.",
       },
     },
     {
@@ -543,15 +543,18 @@ npm run mission   ← your checklist`,
       x: col(9),
       y: ROW.p2,
       detail: {
-        heading: "lib/db.ts, lib/catalog.ts, lib/payment.ts, lib/inventory.ts",
+        heading: "Mission 6 · every function a span — one line per file",
         code: {
           lang: "ts",
-          text: `'use observe'
+          text: `// uncomment at the top of lib/payment.ts, db.ts, catalog.ts, inventory.ts
+'use observe'
 
 export async function chargePayment(amountCents: number) { … }
-// → a span "chargePayment" with code.filepath, duration, the exception if it throws`,
+// → a span "chargePayment" with code.filepath, duration, the exception if it throws
+
+npm run mission 6   ← what to do, and what is done`,
         },
-        note: "5 min. Behind? Tag block-3-instrumentation.",
+        note: "5 min. The directive ships commented out with a why in each lib file; npm run mission 6 checks the four files, function spans arriving and chargePayment. Behind? Tag block-3-instrumentation.",
       },
     },
     {
@@ -565,20 +568,21 @@ export async function chargePayment(amountCents: number) { … }
       x: col(10),
       y: ROW.p2,
       detail: {
-        heading: "Finish tools/cases/rejected.mjs — which spans are rejected checkouts?",
+        heading: "Mission 7 · which orders were refused — and why?",
         code: {
           lang: "js",
-          text: `export function isRejected(span) {
-  // TODO: a SERVER span (kind 2) of /api/checkout that answered 400
-  return false
-}
+          text: `// tools/cases/rejected.mjs — uncomment the ▶ lines one by one
+checks.push(span.kind === 2)                              // a request the shop received
+checks.push(span.attributes['http.route'] === '/api/checkout')
+checks.push(span.attributes['http.status_code'] === 400)
 
 // npm run case checkout-400  →
-//   placeOrder  order.quantity=20  order.rejected=quantity 20 > limit 10
-// stuck?  npm run case checkout-400 -- --solution`,
+//   placeOrder  order.quantity=20  order.rejected=quantity 20, allowed 1–10
+
+npm run mission 7   ← what to do, and what is done`,
         },
         bullets: ["buy 20 in the shop first", "the other case scripts (npm run case) are there to explore"],
-        note: "10 min. Picks up their own span: the reason they recorded is found by a script over the raw data.",
+        note: "10 min. Picks up their own span: the reason they recorded is found by a script over the raw data. Each uncommented line narrows the search — run the case after each. npm run mission 7 checks the three lines, rejected orders found, and at least one with the reason (orders refused before mission 5 have none). Stuck? npm run case checkout-400 -- --solution",
       },
     },
 
@@ -1352,15 +1356,15 @@ trace.getActiveSpan()?.addEvent('integrity_check', {
     ...inPart(PART.p2, [
       { id: "part-2", focus: ["part-2"], caption: "Part 2 · OpenTelemetry by hand" },
       { id: "black-box", focus: ["black-box"], caption: "Only one format matters: OTLP" },
-      { id: "receiver", focus: ["receiver"], caption: "Your turn · your own receiver" },
-      { id: "first-json", focus: ["first-json"], caption: "Your turn · mission: report the failed order by hand" },
-      { id: "tree", focus: ["tree"], caption: "Your turn · mission: make it a tree" },
+      { id: "receiver", focus: ["receiver"], caption: "Your turn · mission 1: your own receiver" },
+      { id: "first-json", focus: ["first-json"], caption: "Your turn · mission 2: report the failed order by hand" },
+      { id: "tree", focus: ["tree"], caption: "Your turn · mission 3: make it a tree" },
       { id: "break-1", focus: ["break-1"], caption: "Break · 15 minutes" },
-      { id: "apm-by-hand", focus: ["apm-by-hand"], caption: "Your turn · the APM agent, by hand" },
+      { id: "apm-by-hand", focus: ["apm-by-hand"], caption: "Your turn · mission 4: the APM agent, by hand" },
       { id: "sensors", focus: ["sensors"], caption: "It's a trap! — the 400 says nothing" },
-      { id: "own-span", focus: ["own-span"], caption: "Your turn · put the reason on a span" },
-      { id: "use-observe", focus: ["use-observe"], caption: "Your turn · 'use observe'" },
-      { id: "case-by-hand", focus: ["case-by-hand"], caption: "Your turn · one case, by script" },
+      { id: "own-span", focus: ["own-span"], caption: "Your turn · mission 5: put the reason on a span" },
+      { id: "use-observe", focus: ["use-observe"], caption: "Your turn · mission 6: 'use observe'" },
+      { id: "case-by-hand", focus: ["case-by-hand"], caption: "Your turn · mission 7: one case, by script" },
     ]),
     ...inPart(PART.p3, [
       { id: "part-3", focus: ["part-3"], caption: "Part 3 · The observer" },
