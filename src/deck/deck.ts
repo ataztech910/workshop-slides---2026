@@ -719,21 +719,21 @@ npm run load 40           # 3 — and server traffic`,
     {
       id: "find-bugs",
       ...yourTurn(12),
-      title: "Find the six bugs",
-      subtitle: "in the observer — DevTools closed",
+      title: "Find the bugs",
+      subtitle: "nine questions, answered from the observer — DevTools closed",
       status: "running",
       size: "lg",
       x: col(2),
       y: ROW.p4,
       detail: {
-        heading: "Where to look",
+        heading: "Mission 10 · name each bug — npm run mission 10 <key> <answer>",
         bullets: [
           "Errors — what broke in browsers, and the 400",
           "Overview — which route takes the traffic",
           "a trace of the catalog — the waterfall",
           "the regression banner and an operation's page — v1 vs v2",
         ],
-        note: "12 min. Result: six frontend bugs plus two “ops” ones. “How many of them did you notice by hand in part 1?”",
+        note: "12 min. A quiz: npm run mission 10 lists nine questions (six bugs from part 1, three only telemetry shows: N+1 on the home page, the function behind the v2 slowdown, the flaky stock check); they answer with npm run mission 10 <key> <answer>. A wrong answer says where to look, not the answer. The bug cards that follow are the debrief. Ask: “How many of them did you notice by hand in part 1?”",
       },
     },
     {
@@ -1376,7 +1376,7 @@ trace.getActiveSpan()?.addEvent('integrity_check', {
     ...inPart(PART.p4, [
       { id: "part-4", focus: ["part-4"], caption: "Part 4 · What arrives" },
       { id: "deploys", focus: ["deploys"], caption: "Your turn · mission 9: customers and two deployments" },
-      { id: "find-bugs", focus: ["find-bugs"], caption: "Your turn · find the six bugs" },
+      { id: "find-bugs", focus: ["find-bugs"], caption: "Your turn · mission 10: find the bugs" },
       {
         id: "errors",
         focus: ["bug-click", "bug-render", "bug-hydration", "bug-json", "bug-400"],
