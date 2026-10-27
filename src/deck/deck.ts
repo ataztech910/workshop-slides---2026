@@ -1043,22 +1043,18 @@ npm run mission 11   ← tries it in its own browser, asks the observer`,
       x: col(2),
       y: ROW.p5,
       detail: {
-        heading: "Same name as a built-in one — it replaces it",
+        heading: "Mission 13 · your own latency droid — npm run mission 13",
         code: {
           lang: "ts",
-          text: `// observe.agents.ts — plain data, nothing to import
-export default [
-  {
-    name: 'latency_agent',
-    description: 'Finds slow operations and the deployment that made them slow',
-    instruction: \`1. get_operation_stats — learn the real operation names.
-2. compare_versions — a p95 ratio of 2+ is a regression.
-3. Open one trace and name the span with the highest selfMs and its file.\`,
-    tools: ['get_operation_stats', 'compare_versions', 'search_traces', 'get_trace'],
-  },
-]`,
+          text: `// observe.agents.ts — uncomment the ▶ lines
+tools.push('search_traces', 'get_trace')        // what it may use
+'3. Open one slow trace … highest selfMs …'      // how it works
+specialists.push(latencyAgent)                   // replaces the built-in
+
+// observer → Chat: "Checkout is slow. What is causing it
+//                   and which deployment introduced it?"`,
         },
-        note: "12 min. Mock first (are the tools called?), then OBSERVE_AI=real. Ask: “Checkout is slow. What's causing it and which deployment introduced it?”",
+        note: "12 min. observe.agents.ts ships with an empty list and three ▶ lines; the observer reloads it. npm run mission 13 checks the chat history: a question asked after the save, steps by latency_agent, the regression card. Mock first: the mock model calls tools without arguments, so it cannot open a trace — the function (hotspot card) needs OBSERVE_AI=real. The point: the model reasons, the code shows the proof — cards come from tool results.",
       },
     },
     {
@@ -1403,7 +1399,7 @@ trace.getActiveSpan()?.addEvent('integrity_check', {
     ...inPart(PART.p5, [
       { id: "part-5", focus: ["part-5"], caption: "Part 5 · AI" },
       { id: "droid-crew", focus: ["droid-crew"], caption: "The model reasons, the code shows the proof" },
-      { id: "your-agent", focus: ["your-agent"], caption: "Your turn · build your own droid" },
+      { id: "your-agent", focus: ["your-agent"], caption: "Your turn · mission 13: build your own droid" },
       { id: "budget", focus: ["budget"], caption: "I'm sorry, Kevin. Budget: 5 of 5." },
       { id: "lessons", focus: ["case-tool", "case-hallucination"], caption: "Two things that went wrong while we built this" },
       { id: "teleporter", focus: ["teleporter"], caption: "Incident F · these aren't the goods you ordered" },
