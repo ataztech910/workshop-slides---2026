@@ -912,25 +912,27 @@ list.push(productId)   // first visit: getItem → null → JSON.parse(null) →
       id: "fix-some",
       ...yourTurn(5),
       title: "Fix one",
-      subtitle: "Copy prompt → your AI assistant, or by hand",
+      subtitle: "the fix is next to the bug — uncomment it, then prove it",
       status: "running",
       size: "lg",
       x: col(9),
       y: ROW.p4,
       detail: {
-        heading: "One line each",
+        heading: "Mission 11 · one bug gone, proven by the telemetry — npm run mission 11",
         code: {
           lang: "tsx",
-          text: `// the click
-JSON.parse(localStorage.getItem('wishlist') ?? '[]')
+          text: `// app/product/[id]/wishlist.tsx — the click
+list ??= [] // ▶
 
-// the 204
-return Response.json([])
+// app/product/[id]/reviews.tsx — the 204
+if (res.status === 204) return [] // ▶
 
-// the loop: depend on query, not on an object built during render
-useEffect(() => { … }, [query])`,
+// app/search.tsx — the loop: depend on the text, not an object
+changesWhen = filter.q // ▶
+
+npm run mission 11   ← tries it in its own browser, asks the observer`,
         },
-        note: "5 min. “Copy prompt” on the card → Claude Code / Codex. Once fixed, the entry on Errors stops growing.",
+        note: "5 min. Pick one, uncomment its ▶ line, read the Why. npm run mission 11 opens the shop in its own Chrome, does exactly that thing (Save on product 1 → ♥ Saved; product 2's reviews render; typing mug makes ≤5 requests, the loop ~30) and asks the observer whether the error came during that run. Say it: fixed means the error stopped coming — not \"works on my machine\". With an AI assistant: Copy prompt on the Errors card works too, the check is the same.",
       },
     },
     {
@@ -1393,8 +1395,8 @@ trace.getActiveSpan()?.addEvent('integrity_check', {
       { id: "case-n1", focus: ["case-n1"], caption: "The waterfall · one trip per crate" },
       { id: "case-regression", focus: ["case-regression"], caption: "Which deployment made it slow?" },
       { id: "case-flaky", focus: ["case-flaky"], caption: "Works sometimes" },
-      { id: "fix-some", focus: ["fix-some"], caption: "Your turn · fix one" },
-      { id: "night-patrol", focus: ["night-patrol"], caption: "Your turn · mission 12: the night patrol" },
+      { id: "fix-some", focus: ["fix-some"], caption: "Your turn · mission 11: fix one" },
+      { id: "night-patrol", focus: ["night-patrol"], caption: "Your turn · the night patrol" },
       { id: "checks-page", focus: ["checks-page"], caption: "Red in v2 — without a single user" },
       { id: "break-2", focus: ["break-2"], caption: "Break · 15 minutes" },
     ]),
