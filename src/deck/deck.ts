@@ -947,13 +947,13 @@ npm run mission 11   ← tries it in its own browser, asks the observer`,
       x: col(10),
       y: ROW.p4,
       detail: {
-        heading: "The observer asks the app on a timer",
+        heading: "Mission 12 · the observer asks the shop on a timer — npm run mission 12",
         bullets: [
           "run v2 with no traffic at all",
           "“checkout takes under a second” turns red by itself",
-          "add a check of your own — the file is on the next card",
+          "observe.checks.ts: uncomment the ▶ lines · bonus: a check of your own",
         ],
-        note: "10 min. Behind? block-5-observer.",
+        note: "10 min. observe.checks.ts ships with three checks commented out; the observer reloads the file while it runs. npm run mission 12 asks /api/checks: patrolling, the home page up, checkout-under-a-second failed twice on v2 with no traffic, the 99-items rule holds. Behind? block-5-observer.",
       },
     },
     {
