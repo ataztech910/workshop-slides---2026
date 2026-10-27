@@ -1054,7 +1054,7 @@ specialists.push(latencyAgent)                   // replaces the built-in
 // observer → Chat: "Checkout is slow. What is causing it
 //                   and which deployment introduced it?"`,
         },
-        note: "12 min. observe.agents.ts ships with an empty list and three ▶ lines; the observer reloads it. npm run mission 13 checks the chat history: a question asked after the save, steps by latency_agent, the regression card. Mock first: the mock model calls tools without arguments, so it cannot open a trace — the function (hotspot card) needs OBSERVE_AI=real. The point: the model reasons, the code shows the proof — cards come from tool results.",
+        note: "12 min. observe.agents.ts ships with an empty list and three ▶ lines; the observer reloads it. npm run mission 13 checks the chat history: a question asked after the save, steps by latency_agent, the regression card. Mock first: the mock model calls every tool once and opens the slowest trace, so the regression card and the hotspot card (chargePayment, lib/payment.ts) appear without a key; npm run observer:real for real answers. The point: the model reasons, the code shows the proof — cards come from tool results.",
       },
     },
     {
