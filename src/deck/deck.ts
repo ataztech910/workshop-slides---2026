@@ -328,22 +328,48 @@ context:   traceparent: 00-<traceId>-<spanId>-01`,
         note: "6 min. The key point: the data is not where it goes. Name the alternatives out loud.",
       },
     },
+    {
+      id: "agents-theory",
+      title: "How an agent works",
+      subtitle: "a model + an instruction + tools, in a loop",
+      status: "ok",
+      size: "lg",
+      chips: [mono("Google ADK"), mono("LlmAgent"), mono("FunctionTool"), mono("Runner")],
+      x: col(12),
+      y: ROW.p1,
+      detail: {
+        heading: "The model asks. Your code answers. Until it can reply.",
+        code: {
+          lang: "text",
+          text: `question ─▶ model ── asks: rejected_orders() ──▶ your code runs it
+              ▲                                         │
+              └──────── the result (facts) ◀────────────┘
+           … until it answers instead of asking
+
+an agent = a model + an instruction + tools
+the model sees only what the tools return
+Google ADK: LlmAgent · FunctionTool · Runner
+the same loop: LangGraph · OpenAI Agents SDK · Claude Agent SDK`,
+        },
+        note: "4 min. Theory only: they build one by hand at the end of part 2 (mission 8), over their own raw spans; the AI agents later in the day are the same loop. Point at the loop: the model never touches data — it asks, code runs, the result goes back. No tool, no facts.",
+      },
+    },
     /* ================= Row 2 — Part 2 · OpenTelemetry by hand ================= */
     {
       id: "part-2",
       title: "Part 2 · OpenTelemetry by hand",
-      subtitle: "receive it, send it, add your own — small pieces, your keyboard",
+      subtitle: "receive it, send it, add your own, ask an agent — small pieces, your keyboard",
       status: "running",
       size: "hero",
       chips: [mono("OTLP"), mono("receiver"), mono("the shop"), mono("your span")],
       x: col(0),
       y: ROW.p2 - 40,
       detail: {
-        heading: "Seven missions — each one: npm run mission N",
+        heading: "Eight missions — each one: npm run mission N",
         bullets: [
           "your own OTLP receiver · your first span · make it a tree",
           "the shop sends its own spans · a span of your own · 'use observe'",
-          "one case, by script, over your own raw spans",
+          "one case by script — and your first AI agent (Google ADK) over the same raw spans",
         ],
         note: "30 s. Part title. From here, a “Your turn” every 5–10 minutes.",
       },
@@ -585,6 +611,52 @@ npm run mission 7   ← what to do, and what is done`,
         note: "10 min. Picks up their own span: the reason they recorded is found by a script over the raw data. Each uncommented line narrows the search — run the case after each. npm run mission 7 checks the three lines, rejected orders found, and at least one with the reason (orders refused before mission 5 have none). Stuck? npm run case checkout-400 -- --solution",
       },
     },
+    {
+      id: "agent-by-hand",
+      ...yourTurn(10),
+      title: "Your first agent, by hand",
+      subtitle: "Google ADK over your raw spans",
+      status: "running",
+      size: "lg",
+      chips: [mono("npm run agent")],
+      x: col(11),
+      y: ROW.p2,
+      detail: {
+        heading: "Mission 8 · a model answers from your data — npm run mission 8",
+        code: {
+          lang: "text",
+          text: `// tools/agent.mjs — uncomment the ▶ lines, one by one
+for await (const event of runner.runAsync(…)) …  // the loop
+tools.push(rejectedOrders)                       // a tool
+steps.push('Call rejected_orders, then …')       // a step
+
+npm run agent "Why do orders fail?"
+  model asks    rejected_orders({})
+  code ran it   → reasons: ["quantity 20, allowed 1–10"]
+  model answers …`,
+        },
+        note: "10 min. After each ▶ line they run it again and watch the printout change: no tool — the model can only guess; a tool but no step in the instruction — it has the tool and still does not look; both — model asks, code runs, model answers with the reason from their own placeOrder span. Mock model by default (no key); npm run agent -- --solution for anyone behind.",
+      },
+    },
+    {
+      id: "real-model",
+      title: "A real model",
+      subtitle: "Kitana or Gemini — your choice",
+      status: "idle",
+      size: "md",
+      chips: [mono("npm run agent -- --real")],
+      x: col(12),
+      y: ROW.p2,
+      detail: {
+        heading: "The same loop, with the thinking switched on",
+        bullets: [
+          "Kitana: your logged-in claude or codex CLI — no API key",
+          "Gemini: GEMINI_API_KEY + GEMINI_MODEL in .env — ADK talks to it directly",
+          "the mock is the same loop without the thinking — enough for every mission",
+        ],
+        note: "3 min. Presenter demo: show Kitana live on your test bench (or Gemini) — which one is the participant's choice. One question is several model calls; real calls cost. The observer later uses the same switch: npm run observer:real.",
+      },
+    },
 
     /* ================= Row 3 — Part 3 · The observer ================= */
     {
@@ -649,13 +721,13 @@ npm run mission 7   ← what to do, and what is done`,
       x: col(3),
       y: ROW.p3,
       detail: {
-        heading: "Mission 8 · same port, same OTLP — the app does not change a line",
+        heading: "Mission 9 · same port, same OTLP — the app does not change a line",
         bullets: [
-          "Ctrl+C the receiver, then npm run observer · npm run mission 8",
+          "Ctrl+C the receiver, then npm run observer · npm run mission 9",
           "open http://127.0.0.1:4318 — find your placeOrder",
           "“Where were you?” — “Nobody connected me, Kevin.”",
         ],
-        note: "5 min. The moment of the day: the same OTLP, a different receiver. npm run mission 8 asks the observer on 4318: is it the observer (not the receiver), the shop and the browser arrive, a placeOrder trace, the reason on it — what the receiver kept is not in the observer, so they buy 20 once more.",
+        note: "5 min. The moment of the day: the same OTLP, a different receiver. npm run mission 9 asks the observer on 4318: is it the observer (not the receiver), the shop and the browser arrive, a placeOrder trace, the reason on it — what the receiver kept is not in the observer, so they buy 20 once more.",
       },
     },
     {
@@ -705,7 +777,7 @@ npm run mission 7   ← what to do, and what is done`,
       x: col(1),
       y: ROW.p4,
       detail: {
-        heading: "Mission 9 · two deployments, customers on both — npm run mission 9",
+        heading: "Mission 10 · two deployments, customers on both — npm run mission 10",
         code: {
           lang: "bash",
           text: `npm run observer          # 1
@@ -713,7 +785,7 @@ npm run dev:v1            # 2 — later Ctrl+C and: npm run dev:v2
 npm run users 60          # 3 — customers in a browser
 npm run load 40           # 3 — and server traffic`,
         },
-        note: "3 min. users causes the browser bugs (Chrome, nothing downloaded), load sends server traffic. After v2, both again. npm run mission 9 checks v1 then v2 in the observer, browser customers on both, and that the observer can compare the two (checkouts in both).",
+        note: "3 min. users causes the browser bugs (Chrome, nothing downloaded), load sends server traffic. After v2, both again. npm run mission 10 checks v1 then v2 in the observer, browser customers on both, and that the observer can compare the two (checkouts in both).",
       },
     },
     {
@@ -726,14 +798,14 @@ npm run load 40           # 3 — and server traffic`,
       x: col(2),
       y: ROW.p4,
       detail: {
-        heading: "Mission 10 · name each bug — npm run mission 10 <key> <answer>",
+        heading: "Mission 11 · name each bug — npm run mission 11 <key> <answer>",
         bullets: [
           "Errors — what broke in browsers, and the 400",
           "Overview — which route takes the traffic",
           "a trace of the catalog — the waterfall",
           "the regression banner and an operation's page — v1 vs v2",
         ],
-        note: "12 min. A quiz: npm run mission 10 lists nine questions (six bugs from part 1, three only telemetry shows: N+1 on the home page, the function behind the v2 slowdown, the flaky stock check); they answer with npm run mission 10 <key> <answer>. A wrong answer says where to look, not the answer. The bug cards that follow are the debrief. Ask: “How many of them did you notice by hand in part 1?”",
+        note: "12 min. A quiz: npm run mission 11 lists nine questions (six bugs from part 1, three only telemetry shows: N+1 on the home page, the function behind the v2 slowdown, the flaky stock check); they answer with npm run mission 11 <key> <answer>. A wrong answer says where to look, not the answer. The bug cards that follow are the debrief. Ask: “How many of them did you notice by hand in part 1?”",
       },
     },
     {
@@ -918,7 +990,7 @@ list.push(productId)   // first visit: getItem → null → JSON.parse(null) →
       x: col(9),
       y: ROW.p4,
       detail: {
-        heading: "Mission 11 · one bug gone, proven by the telemetry — npm run mission 11",
+        heading: "Mission 12 · one bug gone, proven by the telemetry — npm run mission 12",
         code: {
           lang: "tsx",
           text: `// app/product/[id]/wishlist.tsx — the click
@@ -930,9 +1002,9 @@ if (res.status === 204) return [] // ▶
 // app/search.tsx — the loop: depend on the text, not an object
 changesWhen = filter.q // ▶
 
-npm run mission 11   ← tries it in its own browser, asks the observer`,
+npm run mission 12   ← tries it in its own browser, asks the observer`,
         },
-        note: "5 min. Pick one, uncomment its ▶ line, read the Why. npm run mission 11 opens the shop in its own Chrome, does exactly that thing (Save on product 1 → ♥ Saved; product 2's reviews render; typing mug makes ≤5 requests, the loop ~30) and asks the observer whether the error came during that run. Say it: fixed means the error stopped coming — not \"works on my machine\". With an AI assistant: Copy prompt on the Errors card works too, the check is the same.",
+        note: "5 min. Pick one, uncomment its ▶ line, read the Why. npm run mission 12 opens the shop in its own Chrome, does exactly that thing (Save on product 1 → ♥ Saved; product 2's reviews render; typing mug makes ≤5 requests, the loop ~30) and asks the observer whether the error came during that run. Say it: fixed means the error stopped coming — not \"works on my machine\". With an AI assistant: Copy prompt on the Errors card works too, the check is the same.",
       },
     },
     {
@@ -947,13 +1019,13 @@ npm run mission 11   ← tries it in its own browser, asks the observer`,
       x: col(10),
       y: ROW.p4,
       detail: {
-        heading: "Mission 12 · the observer asks the shop on a timer — npm run mission 12",
+        heading: "Mission 13 · the observer asks the shop on a timer — npm run mission 13",
         bullets: [
           "run v2 with no traffic at all",
           "“checkout takes under a second” turns red by itself",
           "observe.checks.ts: uncomment the ▶ lines · bonus: a check of your own",
         ],
-        note: "10 min. observe.checks.ts ships with three checks commented out; the observer reloads the file while it runs. npm run mission 12 asks /api/checks: patrolling, the home page up, checkout-under-a-second failed twice on v2 with no traffic, the 99-items rule holds. Behind? block-5-observer.",
+        note: "10 min. observe.checks.ts ships with three checks commented out; the observer reloads the file while it runs. npm run mission 13 asks /api/checks: patrolling, the home page up, checkout-under-a-second failed twice on v2 with no traffic, the 99-items rule holds. Behind? block-5-observer.",
       },
     },
     {
@@ -1043,7 +1115,7 @@ npm run mission 11   ← tries it in its own browser, asks the observer`,
       x: col(2),
       y: ROW.p5,
       detail: {
-        heading: "Mission 13 · your own latency droid — npm run mission 13",
+        heading: "Mission 14 · your own latency droid — npm run mission 14",
         code: {
           lang: "ts",
           text: `// observe.agents.ts — uncomment the ▶ lines
@@ -1054,7 +1126,7 @@ specialists.push(latencyAgent)                   // replaces the built-in
 // observer → Chat: "Checkout is slow. What is causing it
 //                   and which deployment introduced it?"`,
         },
-        note: "12 min. observe.agents.ts ships with an empty list and three ▶ lines; the observer reloads it. npm run mission 13 checks the chat history: a question asked after the save, steps by latency_agent, the regression card. Mock first: the mock model calls every tool once and opens the slowest trace, so the regression card and the hotspot card (chargePayment, lib/payment.ts) appear without a key; npm run observer:real for real answers. The point: the model reasons, the code shows the proof — cards come from tool results.",
+        note: "12 min. observe.agents.ts ships with an empty list and three ▶ lines; the observer reloads it. npm run mission 14 checks the chat history: a question asked after the save, steps by latency_agent, the regression card. Mock first: the mock model calls every tool once and opens the slowest trace, so the regression card and the hotspot card (chargePayment, lib/payment.ts) appear without a key; npm run observer:real for real answers. The point: the model reasons, the code shows the proof — cards come from tool results.",
       },
     },
     {
@@ -1284,6 +1356,7 @@ trace.getActiveSpan()?.addEvent('integrity_check', {
     { from: "no-errors", to: "span" },
     { from: "span", to: "trace-anatomy" },
     { from: "trace-anatomy", to: "otel" },
+    { from: "otel", to: "agents-theory" },
 
     { from: "part-2", to: "black-box" },
     { from: "black-box", to: "receiver" },
@@ -1295,6 +1368,8 @@ trace.getActiveSpan()?.addEvent('integrity_check', {
     { from: "sensors", to: "own-span" },
     { from: "own-span", to: "use-observe" },
     { from: "use-observe", to: "case-by-hand" },
+    { from: "case-by-hand", to: "agent-by-hand" },
+    { from: "agent-by-hand", to: "real-model" },
 
     { from: "part-3", to: "three-am" },
     { from: "three-am", to: "apm-agent" },
@@ -1350,6 +1425,7 @@ trace.getActiveSpan()?.addEvent('integrity_check', {
       { id: "span", focus: ["span"], caption: "Logs you have, story you have not" },
       { id: "trace-anatomy", focus: ["trace-anatomy"], caption: "A trace is a tree of spans in time" },
       { id: "otel", focus: ["otel"], caption: "The data and where it goes are different things" },
+      { id: "agents-theory", focus: ["agents-theory"], caption: "How an agent works — a model, tools, a loop" },
     ]),
     ...inPart(PART.p2, [
       { id: "part-2", focus: ["part-2"], caption: "Part 2 · OpenTelemetry by hand" },
@@ -1363,18 +1439,20 @@ trace.getActiveSpan()?.addEvent('integrity_check', {
       { id: "own-span", focus: ["own-span"], caption: "Your turn · mission 5: put the reason on a span" },
       { id: "use-observe", focus: ["use-observe"], caption: "Your turn · mission 6: 'use observe'" },
       { id: "case-by-hand", focus: ["case-by-hand"], caption: "Your turn · mission 7: one case, by script" },
+      { id: "agent-by-hand", focus: ["agent-by-hand"], caption: "Your turn · mission 8: your first agent, by hand" },
+      { id: "real-model", focus: ["real-model"], caption: "A real model: Kitana or Gemini" },
     ]),
     ...inPart(PART.p3, [
       { id: "part-3", focus: ["part-3"], caption: "Part 3 · The observer" },
       { id: "three-am", focus: ["three-am"], caption: "There has to be a better way" },
       { id: "words", focus: ["apm-agent", "observer"], caption: "Two packages, one letter apart" },
-      { id: "wakes-up", focus: ["wakes-up"], caption: "Your turn · mission 8: good evening, Kevin" },
+      { id: "wakes-up", focus: ["wakes-up"], caption: "Your turn · mission 9: good evening, Kevin" },
       { id: "tour", focus: ["tour"], caption: "A tour on your own spans" },
     ]),
     ...inPart(PART.p4, [
       { id: "part-4", focus: ["part-4"], caption: "Part 4 · What arrives" },
-      { id: "deploys", focus: ["deploys"], caption: "Your turn · mission 9: customers and two deployments" },
-      { id: "find-bugs", focus: ["find-bugs"], caption: "Your turn · mission 10: find the bugs" },
+      { id: "deploys", focus: ["deploys"], caption: "Your turn · mission 10: customers and two deployments" },
+      { id: "find-bugs", focus: ["find-bugs"], caption: "Your turn · mission 11: find the bugs" },
       {
         id: "errors",
         focus: ["bug-click", "bug-render", "bug-hydration", "bug-json", "bug-400"],
@@ -1391,7 +1469,7 @@ trace.getActiveSpan()?.addEvent('integrity_check', {
       { id: "case-n1", focus: ["case-n1"], caption: "The waterfall · one trip per crate" },
       { id: "case-regression", focus: ["case-regression"], caption: "Which deployment made it slow?" },
       { id: "case-flaky", focus: ["case-flaky"], caption: "Works sometimes" },
-      { id: "fix-some", focus: ["fix-some"], caption: "Your turn · mission 11: fix one" },
+      { id: "fix-some", focus: ["fix-some"], caption: "Your turn · mission 12: fix one" },
       { id: "night-patrol", focus: ["night-patrol"], caption: "Your turn · the night patrol" },
       { id: "checks-page", focus: ["checks-page"], caption: "Red in v2 — without a single user" },
       { id: "break-2", focus: ["break-2"], caption: "Break · 15 minutes" },
@@ -1399,7 +1477,7 @@ trace.getActiveSpan()?.addEvent('integrity_check', {
     ...inPart(PART.p5, [
       { id: "part-5", focus: ["part-5"], caption: "Part 5 · AI" },
       { id: "droid-crew", focus: ["droid-crew"], caption: "The model reasons, the code shows the proof" },
-      { id: "your-agent", focus: ["your-agent"], caption: "Your turn · mission 13: build your own droid" },
+      { id: "your-agent", focus: ["your-agent"], caption: "Your turn · mission 14: build your own droid" },
       { id: "budget", focus: ["budget"], caption: "I'm sorry, Kevin. Budget: 5 of 5." },
       { id: "lessons", focus: ["case-tool", "case-hallucination"], caption: "Two things that went wrong while we built this" },
       { id: "teleporter", focus: ["teleporter"], caption: "Incident F · these aren't the goods you ordered" },
