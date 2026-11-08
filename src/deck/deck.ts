@@ -226,7 +226,7 @@ git stash -u && git checkout -B workshop <tag> && npm install
       id: "use-shop",
       ...yourTurn(5),
       title: "Be a customer",
-      subtitle: "npm run dev — DevTools closed",
+      subtitle: "the shop as your users get it — DevTools closed",
       status: "running",
       size: "lg",
       x: col(7),
@@ -239,7 +239,7 @@ git stash -u && git checkout -B workshop <tag> && npm install
           "product 4 — “Show details”",
           "home page — search for “mug”",
         ],
-        note: "5 min. The bare shop, no telemetry. DevTools stay closed — on purpose. Result: a list of what felt broken.",
+        note: "5 min. The bare shop, no telemetry — a production build (start.sh runs npm run build && npm start), so Next.js shows no dev error badge that would give bugs away. DevTools stay closed — on purpose. Result: a list of what felt broken. From mission 4 on: npm run dev.",
       },
     },
     {
