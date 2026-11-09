@@ -348,10 +348,16 @@ context:   traceparent: 00-<traceId>-<spanId>-01`,
 
 an agent = a model + an instruction + tools
 the model sees only what the tools return
-Google ADK: LlmAgent · FunctionTool · Runner
+
+why Google ADK:
+  a team — an agent can be another agent's tool
+  a tool = a plain function (like MCP, in your process)
+  the model is one line: Gemini · Kitana · a mock
+
+LlmAgent · FunctionTool · Runner
 the same loop: LangGraph · OpenAI Agents SDK · Claude Agent SDK`,
         },
-        note: "4 min. Theory only: they build one by hand at the end of part 2 (mission 8), over their own raw spans; the AI agents later in the day are the same loop. Point at the loop: the model never touches data — it asks, code runs, the result goes back. No tool, no facts.",
+        note: "3–4 min. Theory only: they build one by hand at the end of part 2 (mission 8), over their own raw spans; the AI agents later in the day are the same loop. Point at the loop: the model never touches data — it asks, code runs, the result goes back. No tool, no facts. Then why ADK: a team (coordinator + specialists, AgentTool), tools as local functions (the MCP contract without a server; MCPToolset if they already have one), the model swapped in one line. Say \"later today\", don't name the observer yet.",
       },
     },
     /* ================= Row 2 — Part 2 · OpenTelemetry by hand ================= */
